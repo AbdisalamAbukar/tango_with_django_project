@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from rango.models import Category, Page
 from rango.forms import UserForm, UserProfileForm, CategoryForm, PageForm
+from django.contrib.auth.decorators import login_required
+
+
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -177,3 +180,11 @@ def user_login(request):
         # This scenario would most likely be a HTTP GET.
         return render(request, 'rango/login.html')
 
+def user_logout(request):
+ 
+    logout(request)
+    return redirect(reverse('rango:index'))
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
