@@ -20,8 +20,12 @@ def index(request):
     return render(request, 'rango/index.html', context=context_dict)
 
 def about(request):
-    # Spoiler: you don't need to pass a context dictionary here.
-    return render(request, 'rango/about.html')
+    
+    print(request.method)
+
+    print(request.user)
+
+    return render(request, 'rango/about.html', {})
 
 def show_category(request, category_name_slug):
     context_dict = {}
