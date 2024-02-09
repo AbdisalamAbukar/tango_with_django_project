@@ -53,7 +53,13 @@ def about(request):
         print("TEST COOKIE WORKED!")
         request.session.delete_test_cookie()
 
-    return render(request, 'rango/about.html', {})
+    visitor_cookie_handler(request)
+
+    visits = request.session.get("visits", 1)
+
+    context_dict = {'newmessage': "Here is the about page.", 'visits': visits}
+
+    return render(request, 'rango/about.html', context_dict)
 
 def show_category(request, category_name_slug):
     context_dict = {}
